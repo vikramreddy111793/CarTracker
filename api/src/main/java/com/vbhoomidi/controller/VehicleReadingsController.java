@@ -13,18 +13,19 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping(value = "/readings")
 @CrossOrigin(origins = "http://mocker.egen.io", maxAge = 3600)
 public class VehicleReadingsController {
 
     @Autowired
     private VehicleReadingsService service;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/readings/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public List<VehicleReadings> findReadingsofVehicle(@PathVariable("id") String id){
         return service.findReadingsofVehicle(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/readings")
+    @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody VehicleReadings readings){
         service.create(readings);
     }

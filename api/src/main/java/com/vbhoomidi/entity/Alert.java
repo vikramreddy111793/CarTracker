@@ -11,7 +11,9 @@ import java.util.UUID;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Alert.countHighAlertsbyVin",
-                    query = "SELECT a FROM Alert a WHERE a.vin=:givenVin and a.priority=:givenPriority")
+                    query = "SELECT a FROM Alert a WHERE a.vin=:givenVin and a.priority=:givenPriority"),
+        @NamedQuery(name = "Alert.findAlertsbyVin",
+                    query = "SELECT a FROM Alert a WHERE a.vin=:givenVin")
 })
 public class Alert {
 

@@ -30,8 +30,16 @@ public class AlertRepositoryImpl implements AlertRepository {
         entityManager.persist(alert);
     }
 
-    public List<Alert> findbyVin(String vin) {
-        return null;
+    public List<Alert> findAlertsbyVin(String vin) {
+        TypedQuery<Alert> query = entityManager.createNamedQuery("Alert.findAlertsbyVin", Alert.class);
+        query.setParameter("givenVin", vin);
+        List<Alert> list = query.getResultList();
+        if(list != null){
+            return list;
+        }
+        else{
+            return null;
+        }
     }
 
     public int countHighAlertsbyVin(String vin) {

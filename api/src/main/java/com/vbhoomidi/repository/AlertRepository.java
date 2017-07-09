@@ -11,6 +11,6 @@ public interface AlertRepository {
     List<Alert> findAll();
     Alert findOne(String id);
     void create(Alert alert);
-    List<Alert> findbyVin(String vin);
+    List<Alert> findAlertsbyVin(String vin);
     int countHighAlertsbyVin(String vin);
 }

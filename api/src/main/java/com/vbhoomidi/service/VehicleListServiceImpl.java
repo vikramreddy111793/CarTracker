@@ -1,6 +1,7 @@
 package com.vbhoomidi.service;
 
 
+import com.vbhoomidi.entity.Alert;
 import com.vbhoomidi.entity.VehicleInfo;
 import com.vbhoomidi.repository.AlertRepository;
 import com.vbhoomidi.repository.VehicleListRepository;
@@ -35,6 +36,11 @@ public class VehicleListServiceImpl implements VehicleListService {
             highalertscount.put(v,count);
         }
         return highalertscount;
+    }
+
+    public List<Alert> findAlertsofVehicle(String id) {
+        VehicleInfo vehicle = vehicleRepository.findOne(id);
+        return alertRepository.findAlertsbyVin(vehicle.getVin());
     }
 
     @Transactional
