@@ -23,8 +23,7 @@ public class VehicleListController {
         return service.findOne(vehicleID);
     }
     @RequestMapping(method = RequestMethod.PUT, value = "/vehicles")
-    public void create(@RequestBody List<VehicleInfo> vehicle){
+    public void create(@RequestBody VehicleInfo[] vehicle){
         service.create(vehicle);
     }
-
 }

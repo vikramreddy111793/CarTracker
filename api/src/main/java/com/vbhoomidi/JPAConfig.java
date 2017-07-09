@@ -25,7 +25,7 @@ public class JPAConfig {
       emf.setPackagesToScan("com.vbhoomidi.entity");
       Properties properties = new Properties();
       properties.put("hibernate.dialect","org.hibernate.dialect.MySQL5Dialect");
-      properties.setProperty("hibernate.hbm2ddl.auto","create");
+      properties.setProperty("hibernate.hbm2ddl.auto","validate");
       properties.setProperty("hibernate.show_sql","true");
       emf.setJpaProperties(properties);
       return emf;

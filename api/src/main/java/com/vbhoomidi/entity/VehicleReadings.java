@@ -27,11 +27,20 @@ public class VehicleReadings {
     private int engineRpm;
 
     @OneToOne
-    private Tire tire;
+    private Tire tires;
 
     public  VehicleReadings(){
         this.id = UUID.randomUUID().toString();
     }
+    public Tire getTires() {
+        return tires;
+    }
+
+    public void setTires(Tire tires) {
+        this.tires = tires;
+    }
+
+
     public String getId() {
         return id;
     }
@@ -128,11 +137,22 @@ public class VehicleReadings {
         this.engineRpm = engineRpm;
     }
 
-    public Tire getTire() {
-        return tire;
-    }
-
-    public void setTire(Tire tire) {
-        this.tire = tire;
+    @Override
+    public String toString() {
+        return "VehicleReadings{" +
+                "id='" + id + '\'' +
+                ", vin='" + vin + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", timestamp=" + timestamp +
+                ", fuelVolume=" + fuelVolume +
+                ", speed=" + speed +
+                ", engineHp=" + engineHp +
+                ", checkEngineLightOn=" + checkEngineLightOn +
+                ", engineCoolantLow=" + engineCoolantLow +
+                ", cruiseControlOn=" + cruiseControlOn +
+                ", engineRpm=" + engineRpm +
+                ", tires=" + tires +
+                '}';
     }
 }

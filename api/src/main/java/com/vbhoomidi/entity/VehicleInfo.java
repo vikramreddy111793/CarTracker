@@ -90,4 +90,18 @@ public class VehicleInfo {
     public void setLastServiceDate(Date lastServiceDate) {
         this.lastServiceDate = lastServiceDate;
     }
+
+    @Override
+    public String toString() {
+        return "VehicleInfo{" +
+                "id='" + id + '\'' +
+                ", vin='" + vin + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", redlineRpm=" + redlineRpm +
+                ", maxFuelVolume=" + maxFuelVolume +
+                ", lastServiceDate=" + lastServiceDate +
+                '}';
+    }
 }

@@ -24,15 +24,15 @@ public class VehicleListServiceImpl implements VehicleListService {
     }
 
     @Transactional
-    public void create(List<VehicleInfo> vehicle) {
-        for(int i=0; i< vehicle.size(); i++){
-            VehicleInfo existing = repository.findbyVin((vehicle.get(i)).getVin());
+    public void create(VehicleInfo[] vehicle) {
+        for(int i=0; i< vehicle.length; i++){
+            VehicleInfo existing = repository.findbyVin((vehicle[i]).getVin());
             if(existing==null){
-                repository.create(vehicle.get(i));
+                repository.create(vehicle[i]);
             }
             else{
-                (vehicle.get(i)).setId(existing.getId());
-                repository.update(vehicle.get(i));
+                (vehicle[i]).setId(existing.getId());
+                repository.update(vehicle[i]);
             }
         }
     }

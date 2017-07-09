@@ -8,5 +8,5 @@ import java.util.List;
 public interface VehicleListService {
     List<VehicleInfo> findAll();
     VehicleInfo findOne(String id);
-    void create(List<VehicleInfo> vehicle);
+    void create(VehicleInfo[] vehicle);
 }
