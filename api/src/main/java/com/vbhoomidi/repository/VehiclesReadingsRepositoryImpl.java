@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -17,14 +18,6 @@ public class VehiclesReadingsRepositoryImpl implements VehicleReadingsRepository
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<VehicleReadings> findAll() {
-        return null;
-    }
-
-    public VehicleReadings findOne(String id) {
-        return null;
-    }
-
     public void readingsCreate(VehicleReadings readings) {
         entityManager.persist(readings);
     }
@@ -34,11 +27,16 @@ public class VehiclesReadingsRepositoryImpl implements VehicleReadingsRepository
         return tire;
     }
 
-    public VehicleReadings findbyVin(String vin) {
-        return null;
+    public List<VehicleReadings> findReadingsbyVin(String vin) {
+        TypedQuery<VehicleReadings> query = entityManager.createNamedQuery("VehicleReadings.findbyVin", VehicleReadings.class);
+        query.setParameter("givenVin", vin);
+        List<VehicleReadings> list = query.getResultList();
+        if(list != null){
+            return list;
+        }
+        else{
+            return null;
+        }
     }
 
-    public void update(VehicleReadings vehicle) {
-
-    }
 }

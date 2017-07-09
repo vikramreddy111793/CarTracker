@@ -19,15 +19,11 @@ public class VehicleReadingsController {
     @Autowired
     private VehicleReadingsService service;
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/readings")
-//    public List<VehicleReadings> findAll(){
-//        return service.findAll();
-//    }
-//    @RequestMapping(method = RequestMethod.GET, value = "/reading/{id}")
-//    public VehicleReadings findOne(@PathVariable("id") String vehicleID){
-//        return service.findOne(vehicleID);
-//    }
-//
+    @RequestMapping(method = RequestMethod.GET, value = "/readings/{id}")
+    public List<VehicleReadings> findReadingsofVehicle(@PathVariable("id") String id){
+        return service.findReadingsofVehicle(id);
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/readings")
     public void create(@RequestBody VehicleReadings readings){
         service.create(readings);

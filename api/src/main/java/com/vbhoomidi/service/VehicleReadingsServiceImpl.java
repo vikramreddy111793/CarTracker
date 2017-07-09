@@ -26,12 +26,9 @@ public class VehicleReadingsServiceImpl implements VehicleReadingsService {
     @Autowired
     private AlertRepository alertRepository;
 
-    public List<VehicleReadings> findAll() {
-        return null;
-    }
-
-    public VehicleReadings findOne(String id) {
-        return null;
+    public List<VehicleReadings> findReadingsofVehicle(String id) {
+        VehicleInfo vehicle = vehicleRepository.findOne(id);
+        return readingsRepository.findReadingsbyVin(vehicle.getVin());
     }
 
     @Transactional

@@ -6,7 +6,9 @@ import java.util.UUID;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "VehicleInfo.findbyVin",
-                    query = "SELECT v FROM VehicleInfo v WHERE v.vin=:givenVin")
+                    query = "SELECT v FROM VehicleInfo v WHERE v.vin=:givenVin"),
+        @NamedQuery(name = "VehicleInfo.findAll",
+                    query = "SELECT v FROM VehicleInfo v")
 })
 public class VehicleInfo {
 

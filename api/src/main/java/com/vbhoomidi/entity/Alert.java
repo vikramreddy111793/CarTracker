@@ -1,8 +1,6 @@
 package com.vbhoomidi.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,6 +9,10 @@ import java.util.UUID;
  */
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Alert.countHighAlertsbyVin",
+                    query = "SELECT a FROM Alert a WHERE a.vin=:givenVin and a.priority=:givenPriority")
+})
 public class Alert {
 
     @Id

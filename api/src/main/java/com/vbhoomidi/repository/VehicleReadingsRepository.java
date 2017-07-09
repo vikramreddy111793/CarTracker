@@ -1,7 +1,6 @@
 package com.vbhoomidi.repository;
 
 import com.vbhoomidi.entity.Tire;
-import com.vbhoomidi.entity.VehicleInfo;
 import com.vbhoomidi.entity.VehicleReadings;
 
 import java.util.List;
@@ -11,10 +10,7 @@ import java.util.List;
  */
 public interface VehicleReadingsRepository {
 
-    List<VehicleReadings> findAll();
-    VehicleReadings findOne(String id);
     void readingsCreate(VehicleReadings readings);
     Tire tireCreate(Tire tire);
-    VehicleReadings findbyVin(String vin);
-    void update(VehicleReadings vehicle);
+    List<VehicleReadings> findReadingsbyVin(String vin);
 }

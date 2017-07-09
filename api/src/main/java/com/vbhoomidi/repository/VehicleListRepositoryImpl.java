@@ -2,8 +2,6 @@ package com.vbhoomidi.repository;
 
 import com.vbhoomidi.entity.VehicleInfo;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,7 +14,8 @@ public class VehicleListRepositoryImpl implements VehicleListRepository {
     private EntityManager entityManager;
 
     public List<VehicleInfo> findAll() {
-        return null;
+        TypedQuery<VehicleInfo> query = entityManager.createNamedQuery("VehicleInfo.findAll", VehicleInfo.class);
+        return query.getResultList();
     }
 
     public VehicleInfo findOne(String id) {

@@ -1,13 +1,14 @@
 package com.vbhoomidi.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "VehicleReadings.findbyVin",
+                query = "SELECT v FROM VehicleReadings v WHERE v.vin=:givenVin")
+})
 public class VehicleReadings {
 
     @Id
