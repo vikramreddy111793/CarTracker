@@ -1,17 +1,12 @@
 package com.vbhoomidi.service.impl;
 
-import com.vbhoomidi.entity.Alert;
-import com.vbhoomidi.entity.VehicleInfo;
 import com.vbhoomidi.entity.VehicleReadings;
-import com.vbhoomidi.repository.AlertRepository;
-import com.vbhoomidi.repository.VehicleListRepository;
+import com.vbhoomidi.exception.ResourceNotFoundException;
 import com.vbhoomidi.repository.VehicleReadingsRepository;
 import com.vbhoomidi.service.VehicleReadingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,8 +19,11 @@ public class VehicleReadingsServiceImpl implements VehicleReadingsService {
     private VehicleReadingsRepository repository;
 
     public List<VehicleReadings> findReadingsofVehicle(String vin) {
-
-        return repository.findReadingsbyVin(vin);
+        List<VehicleReadings> existinglist = repository.findReadingsbyVin(vin);
+        if(existinglist == null || existinglist.size()==0){
+            throw new ResourceNotFoundException("This vehicle with vin-"+vin+" doesn't have any readings");
+        }
+        return existinglist;
     }
 
     public void create(VehicleReadings readings) {

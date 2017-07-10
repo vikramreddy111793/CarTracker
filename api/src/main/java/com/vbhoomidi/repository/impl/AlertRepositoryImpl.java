@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -35,21 +34,16 @@ public class AlertRepositoryImpl implements AlertRepository {
         }
     }
 
-    public int countHighAlertsbyVin(String vin) {
+    public List<Alert> getHighAlertsbyVin(String vin) {
         TypedQuery<Alert> query = entityManager.createNamedQuery("Alert.countHighAlertsbyVin",Alert.class);
         query.setParameter("givenVin", vin);
         query.setParameter("givenPriority","HIGH");
         List<Alert> list = query.getResultList();
-        int count=0;
-        for(int i=0; i<list.size(); i++){
-            Calendar previous = Calendar.getInstance();
-            Calendar current = Calendar.getInstance();
-            previous.setTime((list.get(i)).getTimeStamp());
-            long difference = current.getTimeInMillis()-previous.getTimeInMillis();
-            if(difference<=2*60*60*1000){
-                count++;
-            }
+        if(list != null){
+            return list;
         }
-        return count;
+        else{
+            return null;
+        }
     }
 }

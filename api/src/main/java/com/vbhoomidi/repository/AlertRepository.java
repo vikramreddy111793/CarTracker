@@ -10,5 +10,5 @@ import java.util.List;
 public interface AlertRepository {
     void create(Alert alert);
     List<Alert> findAlertsbyVin(String vin);
-    int countHighAlertsbyVin(String vin);
+    List<Alert> getHighAlertsbyVin(String vin);
 }

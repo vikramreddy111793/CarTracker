@@ -1,9 +1,8 @@
 package com.vbhoomidi.service.impl;
 
 
-import com.vbhoomidi.entity.Alert;
 import com.vbhoomidi.entity.VehicleInfo;
-import com.vbhoomidi.repository.AlertRepository;
+import com.vbhoomidi.exception.ResourceNotFoundException;
 import com.vbhoomidi.repository.VehicleListRepository;
 import com.vbhoomidi.service.VehicleListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,27 @@ public class VehicleListServiceImpl implements VehicleListService {
     private VehicleListRepository repository;
 
     public List<VehicleInfo> findAll() {
-        return repository.findAll();
+        List<VehicleInfo> existinglist = repository.findAll();
+        if(existinglist == null || existinglist.size()==0){
+            throw new ResourceNotFoundException("No List of Vehicles exist");
+        }
+        return existinglist;
     }
 
     public VehicleInfo findOne(String id) {
-        return repository.findOne(id);
+        VehicleInfo existing = repository.findOne(id);
+        if(existing == null){
+            throw new ResourceNotFoundException("Vehicle with id-"+id+" doesn't exist");
+        }
+        return existing;
     }
 
     public VehicleInfo findbyVin(String vin) {
-        return repository.findbyVin(vin);
+        VehicleInfo existing = repository.findbyVin(vin);
+        if(existing == null){
+            throw new ResourceNotFoundException("Vehicle with vin-"+vin+" doesn't exist");
+        }
+        return existing;
     }
 
     @Transactional
