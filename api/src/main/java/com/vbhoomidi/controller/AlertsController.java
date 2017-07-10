@@ -1,9 +1,8 @@
 package com.vbhoomidi.controller;
 
+import com.vbhoomidi.FacadeService.VehicleReadingAlertFacade;
 import com.vbhoomidi.entity.Alert;
 import com.vbhoomidi.entity.VehicleInfo;
-import com.vbhoomidi.entity.VehicleReadings;
-import com.vbhoomidi.service.VehicleListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +20,14 @@ import java.util.Map;
 public class AlertsController {
 
     @Autowired
-    VehicleListService vehicleService;
+    private VehicleReadingAlertFacade facadeService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public List<Alert> findAlertsofVehicle(@PathVariable("id") String id){
-        return vehicleService.findAlertsofVehicle(id);
+        return facadeService.findAlertsofVehicle(id);
     }
     @RequestMapping(method = RequestMethod.GET, value = "/high")
     public Map<VehicleInfo, Integer> countHighAlerts(){
-        return vehicleService.countHighAlerts();
+        return facadeService.countHighAlerts();
     }
 }

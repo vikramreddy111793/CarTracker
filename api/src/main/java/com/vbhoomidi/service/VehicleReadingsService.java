@@ -9,7 +9,6 @@ import java.util.List;
  * Created by vikramreddy on 7/9/2017.
  */
 public interface VehicleReadingsService {
-    List<VehicleReadings> findReadingsofVehicle(String id);
+    List<VehicleReadings> findReadingsofVehicle(String vin);
     void create(VehicleReadings readings);
-    void createAlert(String vin, String priority, Date timeStamp);
 }

@@ -1,8 +1,7 @@
 package com.vbhoomidi.controller;
 
-import com.vbhoomidi.entity.VehicleInfo;
+import com.vbhoomidi.FacadeService.VehicleReadingAlertFacade;
 import com.vbhoomidi.entity.VehicleReadings;
-import com.vbhoomidi.service.VehicleReadingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +17,15 @@ import java.util.List;
 public class VehicleReadingsController {
 
     @Autowired
-    private VehicleReadingsService service;
+    private VehicleReadingAlertFacade facadeService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public List<VehicleReadings> findReadingsofVehicle(@PathVariable("id") String id){
-        return service.findReadingsofVehicle(id);
+        return facadeService.findReadingsofVehicle(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody VehicleReadings readings){
-        service.create(readings);
+        facadeService.createReadings(readings);
     }
 }

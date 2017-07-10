@@ -8,8 +8,6 @@ import java.util.List;
  * Created by vikramreddy on 7/9/2017.
  */
 public interface AlertRepository {
-    List<Alert> findAll();
-    Alert findOne(String id);
     void create(Alert alert);
     List<Alert> findAlertsbyVin(String vin);
     int countHighAlertsbyVin(String vin);

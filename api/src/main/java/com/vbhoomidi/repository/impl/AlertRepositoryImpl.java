@@ -1,6 +1,7 @@
-package com.vbhoomidi.repository;
+package com.vbhoomidi.repository.impl;
 
 import com.vbhoomidi.entity.Alert;
+import com.vbhoomidi.repository.AlertRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,14 +18,6 @@ public class AlertRepositoryImpl implements AlertRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    public List<Alert> findAll() {
-        return null;
-    }
-
-    public Alert findOne(String id) {
-        return null;
-    }
 
     public void create(Alert alert) {
         entityManager.persist(alert);

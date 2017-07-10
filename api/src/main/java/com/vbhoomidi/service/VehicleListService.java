@@ -10,7 +10,6 @@ import java.util.Map;
 public interface VehicleListService {
     List<VehicleInfo> findAll();
     VehicleInfo findOne(String id);
+    VehicleInfo findbyVin(String vin);
     void create(VehicleInfo[] vehicle);
-    Map<VehicleInfo, Integer> countHighAlerts();
-    List<Alert> findAlertsofVehicle(String id);
 }

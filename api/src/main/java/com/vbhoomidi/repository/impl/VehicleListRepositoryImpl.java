@@ -1,6 +1,7 @@
-package com.vbhoomidi.repository;
+package com.vbhoomidi.repository.impl;
 
 import com.vbhoomidi.entity.VehicleInfo;
+import com.vbhoomidi.repository.VehicleListRepository;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

@@ -1,7 +1,8 @@
-package com.vbhoomidi.repository;
+package com.vbhoomidi.repository.impl;
 
 import com.vbhoomidi.entity.Tire;
 import com.vbhoomidi.entity.VehicleReadings;
+import com.vbhoomidi.repository.VehicleReadingsRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
