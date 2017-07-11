@@ -20,7 +20,7 @@ public class VehicleReadingsServiceImpl implements VehicleReadingsService {
 
     public List<VehicleReadings> findReadingsofVehicle(String vin) {
         List<VehicleReadings> existinglist = repository.findReadingsbyVin(vin);
-        if(existinglist == null || existinglist.size()==0){
+        if(existinglist == null){
             throw new ResourceNotFoundException("This vehicle with vin-"+vin+" doesn't have any readings");
         }
         return existinglist;

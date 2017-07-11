@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/readings")
-//@CrossOrigin(origins = "http://mocker.egen.io", maxAge = 3600)
+@CrossOrigin(origins = "http://mocker.egen.io", maxAge = 3600)
 public class VehicleReadingsController {
 
     @Autowired

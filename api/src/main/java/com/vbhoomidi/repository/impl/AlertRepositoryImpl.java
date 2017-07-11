@@ -26,7 +26,7 @@ public class AlertRepositoryImpl implements AlertRepository {
         TypedQuery<Alert> query = entityManager.createNamedQuery("Alert.findAlertsbyVin", Alert.class);
         query.setParameter("givenVin", vin);
         List<Alert> list = query.getResultList();
-        if(list != null){
+        if(!list.isEmpty()){
             return list;
         }
         else{
@@ -39,7 +39,7 @@ public class AlertRepositoryImpl implements AlertRepository {
         query.setParameter("givenVin", vin);
         query.setParameter("givenPriority","HIGH");
         List<Alert> list = query.getResultList();
-        if(list != null){
+        if(!list.isEmpty()){
             return list;
         }
         else{

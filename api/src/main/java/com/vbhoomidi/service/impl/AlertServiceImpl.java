@@ -29,28 +29,25 @@ public class AlertServiceImpl implements AlertService {
     }
 
     public int countHighAlertsbyVin(String vin) {
-        List<Alert> list = repository.getHighAlertsbyVin(vin);
+        List<Alert> alertslist = repository.getHighAlertsbyVin(vin);
         int count=0;
-        if(list == null){
-            return count;
-        }
-        else{
-            for(int i=0; i<list.size(); i++){
+        if(alertslist != null){
+            for(Alert a : alertslist){
                 Calendar previous = Calendar.getInstance();
                 Calendar current = Calendar.getInstance();
-                previous.setTime((list.get(i)).getTimeStamp());
+                previous.setTime(a.getTimeStamp());
                 long difference = current.getTimeInMillis()-previous.getTimeInMillis();
                 if(difference<=2*60*60*1000){
                     count++;
                 }
             }
-            return count;
         }
+        return count;
     }
 
     public List<Alert> findAlertsbyVin(String vin) {
         List<Alert> list = repository.findAlertsbyVin(vin);
-        if(list == null || list.size()==0){
+        if(list == null){
             throw new ResourceNotFoundException("This vehicle with vin-"+vin+" doesn't have any Alerts");
         }
         return list;

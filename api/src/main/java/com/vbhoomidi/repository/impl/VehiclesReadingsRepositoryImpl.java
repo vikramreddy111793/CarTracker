@@ -32,7 +32,7 @@ public class VehiclesReadingsRepositoryImpl implements VehicleReadingsRepository
         TypedQuery<VehicleReadings> query = entityManager.createNamedQuery("VehicleReadings.findbyVin", VehicleReadings.class);
         query.setParameter("givenVin", vin);
         List<VehicleReadings> list = query.getResultList();
-        if(list != null){
+        if(!list.isEmpty()){
             return list;
         }
         else{

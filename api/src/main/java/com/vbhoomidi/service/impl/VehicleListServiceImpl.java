@@ -19,32 +19,26 @@ public class VehicleListServiceImpl implements VehicleListService {
 
     public List<VehicleInfo> findAll() {
         List<VehicleInfo> existinglist = repository.findAll();
-        if(existinglist == null || existinglist.size()==0){
+        if(existinglist == null){
             throw new ResourceNotFoundException("No List of Vehicles exist");
         }
         return existinglist;
     }
 
     public VehicleInfo findOne(String id) {
-        VehicleInfo existing = repository.findOne(id);
-        if(existing == null){
-            throw new ResourceNotFoundException("Vehicle with id-"+id+" doesn't exist");
-        }
-        return existing;
+        return repository.findOne(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with id-"+id+" doesn't exist"));
     }
 
     public VehicleInfo findbyVin(String vin) {
-        VehicleInfo existing = repository.findbyVin(vin);
-        if(existing == null){
-            throw new ResourceNotFoundException("Vehicle with vin-"+vin+" doesn't exist");
-        }
-        return existing;
+        return repository.findbyVin(vin)
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with vin-"+vin+" doesn't exist"));
     }
 
     @Transactional
     public void create(VehicleInfo[] vehicle) {
         for(int i=0; i< vehicle.length; i++){
-            VehicleInfo existing = repository.findbyVin((vehicle[i]).getVin());
+            VehicleInfo existing = repository.findbyVin((vehicle[i]).getVin()).orElse(null);
             if(existing==null){
                 repository.create(vehicle[i]);
             }

@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by vikramreddy on 7/9/2017.
@@ -66,10 +65,14 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
     public Map<VehicleInfo, Integer> countHighAlerts() {
         Map<VehicleInfo, Integer> highalertscount = new HashMap<VehicleInfo, Integer>();
         List<VehicleInfo> vehicleslist = vehicleListService.findAll();
-        for(VehicleInfo v: vehicleslist){
-            int count = alertService.countHighAlertsbyVin(v.getVin());
-            highalertscount.put(v,count);
-        }
-        return highalertscount;
+        vehicleslist.forEach(vehicle -> {
+            int count = alertService.countHighAlertsbyVin(vehicle.getVin());
+            highalertscount.put(vehicle,count);
+        });
+        LinkedHashMap<VehicleInfo, Integer> sortedAlertsCount = highalertscount.entrySet().stream()
+                .sorted((a1, a2) -> a2.getValue()-a1.getValue())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap<VehicleInfo,Integer>::new));
+        return sortedAlertsCount;
     }
 }
