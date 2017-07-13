@@ -1,12 +1,16 @@
 package com.vbhoomidi.FacadeService;
 
 import com.vbhoomidi.entity.Alert;
+import com.vbhoomidi.entity.Email;
 import com.vbhoomidi.entity.VehicleInfo;
 import com.vbhoomidi.entity.VehicleReadings;
 import com.vbhoomidi.service.AlertService;
 import com.vbhoomidi.service.VehicleListService;
 import com.vbhoomidi.service.VehicleReadingsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
  * Created by vikramreddy on 7/9/2017.
  */
 @Service
+@PropertySource(value = "classpath:application.properties")
 public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
 
     @Autowired
@@ -25,6 +30,12 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
     private VehicleListService vehicleListService;
     @Autowired
     private VehicleReadingsService vehicleReadingsService;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @Autowired
+    private Environment env;
 
     @Transactional
     public void createReadings(VehicleReadings readings) {
@@ -37,6 +48,11 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
     public void createAlerts(VehicleReadings readings, VehicleInfo vehicle) {
         if(readings.getEngineRpm()>vehicle.getRedlineRpm()){
             alertService.create(readings.getVin(), "HIGH", readings.getTimestamp());
+            Email email = new Email();
+            email.setEmailMessage("High Alert for Car with Vin - "+vehicle.getVin()+"\n Make: "+vehicle.getMake()+"\n Model: "+vehicle.getModel());
+            email.setReceiverEmail(env.getProperty("receiver.useremail"));
+            email.setSenderEmail(env.getProperty("javamail.username"));
+            jmsTemplate.convertAndSend("highalertemailqueue",email);
         }
         if(readings.getFuelVolume()<((vehicle.getMaxFuelVolume())*0.1)){
             alertService.create(readings.getVin(), "MEDIUM", readings.getTimestamp());
