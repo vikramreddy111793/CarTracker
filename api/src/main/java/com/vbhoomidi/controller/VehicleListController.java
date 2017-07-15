@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/vehicles")
@@ -25,7 +26,8 @@ public class VehicleListController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<VehicleInfo> findAll(){
-       return service.findAll();
+
+        return service.findAll().orElseThrow(()->new ResourceNotFoundException("No List of Vehicles exist"));
     }
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public VehicleInfo findOne(@PathVariable("id") String vehicleID){

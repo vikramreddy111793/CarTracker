@@ -4,7 +4,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{AppConfig.class, JPAConfig.class, JMSConfig.class, MailConfig.class};
+        return new Class[]{AppConfig.class, JPAConfig.class, JMSConfig.class, MailConfig.class, EhcacheConfig.class};
     }
 
     protected Class<?>[] getServletConfigClasses() {

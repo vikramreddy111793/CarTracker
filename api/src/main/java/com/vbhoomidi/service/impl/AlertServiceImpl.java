@@ -5,6 +5,8 @@ import com.vbhoomidi.exception.ResourceNotFoundException;
 import com.vbhoomidi.repository.AlertRepository;
 import com.vbhoomidi.service.AlertService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -20,12 +22,14 @@ public class AlertServiceImpl implements AlertService {
     @Autowired
     private AlertRepository repository;
 
-    public void create(String vin, String priority, Date timeStamp) {
+    @CachePut(value = "alertsbyVIN", key = "#vin")
+    public List<Alert> create(String vin, String priority, Date timeStamp) {
         Alert alert = new Alert();
         alert.setPriority(priority);
         alert.setTimeStamp(timeStamp);
         alert.setVin(vin);
         repository.create(alert);
+        return repository.findAlertsbyVin(vin);
     }
 
     public int countHighAlertsbyVin(String vin) {
@@ -33,18 +37,21 @@ public class AlertServiceImpl implements AlertService {
         int count=0;
         if(alertslist != null){
             for(Alert a : alertslist){
-                Calendar previous = Calendar.getInstance();
-                Calendar current = Calendar.getInstance();
-                previous.setTime(a.getTimeStamp());
-                long difference = current.getTimeInMillis()-previous.getTimeInMillis();
-                if(difference<=2*60*60*1000){
-                    count++;
-                }
+
+                    Calendar previous = Calendar.getInstance();
+                    Calendar current = Calendar.getInstance();
+                    previous.setTime(a.getTimeStamp());
+                    long difference = current.getTimeInMillis()-previous.getTimeInMillis();
+                    if(difference<=2*60*60*1000){
+                        count++;
+                    }
+
             }
         }
         return count;
     }
 
+    @Cacheable(value = "alertsbyVIN", key = "#vin")
     public List<Alert> findAlertsbyVin(String vin) {
         List<Alert> list = repository.findAlertsbyVin(vin);
         if(list == null){

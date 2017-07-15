@@ -2,6 +2,7 @@ package com.vbhoomidi.repository.impl;
 
 import com.vbhoomidi.entity.VehicleInfo;
 import com.vbhoomidi.repository.VehicleListRepository;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,20 +31,11 @@ public class VehicleListRepositoryImpl implements VehicleListRepository {
         return Optional.ofNullable(entityManager.find(VehicleInfo.class, id));
     }
 
-    public Optional<VehicleInfo> findbyVin(String vin) {
-        TypedQuery<VehicleInfo> query = entityManager.createNamedQuery("VehicleInfo.findbyVin", VehicleInfo.class);
-        query.setParameter("givenVin", vin);
-        List<VehicleInfo> vehicle = query.getResultList();
-        if(!vehicle.isEmpty()){
-            return Optional.of(vehicle.get(0));
-        }
-        else{
-            return Optional.empty();
-        }
-    }
 
-    public void update(VehicleInfo vehicle) {
+    @CachePut(value = "vehiclesbyID", key = "#vehicle.id")
+    public VehicleInfo update(VehicleInfo vehicle) {
         entityManager.merge(vehicle);
+        return vehicle;
     }
 
     public void create(VehicleInfo vehicle) {

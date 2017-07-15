@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
@@ -70,7 +71,7 @@ public class VehicleListControllerTest {
         list.add(v1);
         list.add(v2);
 
-        when(vehicleListService.findAll()).thenReturn(list);
+        when(vehicleListService.findAll()).thenReturn(Optional.of(list));
 
         mockMvc.perform(get("/vehicles"))
                .andExpect(status().isOk())

@@ -4,10 +4,12 @@ import com.vbhoomidi.entity.Alert;
 import com.vbhoomidi.entity.Email;
 import com.vbhoomidi.entity.VehicleInfo;
 import com.vbhoomidi.entity.VehicleReadings;
+import com.vbhoomidi.exception.ResourceNotFoundException;
 import com.vbhoomidi.service.AlertService;
 import com.vbhoomidi.service.VehicleListService;
 import com.vbhoomidi.service.VehicleReadingsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jms.core.JmsTemplate;
@@ -40,9 +42,11 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
     @Transactional
     public void createReadings(VehicleReadings readings) {
         vehicleReadingsService.create(readings);
-        VehicleInfo vehicle = vehicleListService.findbyVin(readings.getVin());
+        VehicleInfo vehicle = vehicleListService.findbyVin(readings.getVin())
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with vin-"+readings.getVin()+" doesn't exist"));;
         createAlerts(readings,vehicle);
     }
+
 
     @Transactional
     public void createAlerts(VehicleReadings readings, VehicleInfo vehicle) {
@@ -80,7 +84,7 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
 
     public Map<VehicleInfo, Integer> countHighAlerts() {
         Map<VehicleInfo, Integer> highalertscount = new HashMap<VehicleInfo, Integer>();
-        List<VehicleInfo> vehicleslist = vehicleListService.findAll();
+        List<VehicleInfo> vehicleslist = vehicleListService.findAll().orElseThrow(()->new ResourceNotFoundException("No List of Vehicles exist"));
         vehicleslist.forEach(vehicle -> {
             int count = alertService.countHighAlertsbyVin(vehicle.getVin());
             highalertscount.put(vehicle,count);

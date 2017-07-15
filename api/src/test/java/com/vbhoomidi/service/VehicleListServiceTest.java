@@ -71,7 +71,7 @@ public class VehicleListServiceTest {
         list.add(v2);
 
         when(vehicleListRepository.findAll()).thenReturn(list);
-        List<VehicleInfo> response = vehicleListService.findAll();
+        List<VehicleInfo> response = vehicleListService.findAll().orElse(null);
         assertNotNull(response);
         assertEquals(list.get(0).getId(), response.get(0).getId());
         assertEquals(list.get(1).getVin(), response.get(1).getVin());
@@ -126,9 +126,9 @@ public class VehicleListServiceTest {
         vehicle.setMaxFuelVolume(18);
         vehicle.setLastServiceDate(null);
 
-        when(vehicleListRepository.findbyVin(vehicle.getVin())).thenReturn(Optional.of(vehicle));
+        when(vehicleListService.findbyVin(vehicle.getVin())).thenReturn(Optional.of(vehicle));
 
-        VehicleInfo response = vehicleListService.findbyVin(vehicle.getVin());
+        VehicleInfo response = vehicleListService.findbyVin(vehicle.getVin()).orElse(null);
         assertNotNull(response);
         assertEquals(vehicle.getId(), response.getId());
         assertEquals(vehicle.getModel(), response.getModel());
@@ -137,7 +137,7 @@ public class VehicleListServiceTest {
     @Test
     public void findbyVin_Fail_Test() throws Exception{
         String vin = anyString();
-        when(vehicleListRepository.findbyVin(vin)).thenReturn(Optional.empty());
+        when(vehicleListService.findbyVin(vin)).thenThrow(new ResourceNotFoundException("Vehicle with vin-"+vin+" doesn't exist"));
 
         expectedException.expect(ResourceNotFoundException.class);
         expectedException.expectMessage("Vehicle with vin-"+vin+" doesn't exist");

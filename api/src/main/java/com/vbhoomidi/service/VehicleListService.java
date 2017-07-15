@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface VehicleListService {
-    List<VehicleInfo> findAll();
+    Optional<List<VehicleInfo>> findAll();
     VehicleInfo findOne(String id);
-    VehicleInfo findbyVin(String vin);
-    void create(VehicleInfo[] vehicle);
+    Optional<VehicleInfo> findbyVin(String vin);
+    List<VehicleInfo> create(VehicleInfo[] vehicle);
 }
