@@ -21,6 +21,7 @@ public class EhcacheConfig {
         config.addCache(cacheConfig("vehicleslist",1));
         config.addCache(cacheConfig("vehiclesbyID",20));
         config.addCache(cacheConfig("alertsbyVIN",20));
+        config.addCache(cacheConfig("readingsbyVIN",20));
         return CacheManager.newInstance(config);
     }
 

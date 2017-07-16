@@ -5,6 +5,8 @@ import com.vbhoomidi.exception.ResourceNotFoundException;
 import com.vbhoomidi.repository.VehicleReadingsRepository;
 import com.vbhoomidi.service.VehicleReadingsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class VehicleReadingsServiceImpl implements VehicleReadingsService {
     @Autowired
     private VehicleReadingsRepository repository;
 
+    @Cacheable(value = "readingsbyVIN", key = "#vin")
     public List<VehicleReadings> findReadingsofVehicle(String vin) {
         List<VehicleReadings> existinglist = repository.findReadingsbyVin(vin);
         if(existinglist == null){
@@ -26,8 +29,10 @@ public class VehicleReadingsServiceImpl implements VehicleReadingsService {
         return existinglist;
     }
 
-    public void create(VehicleReadings readings) {
+    @CachePut(value = "readingsbyVIN", key = "#readings.vin")
+    public List<VehicleReadings> create(VehicleReadings readings) {
         repository.tireCreate(readings.getTires());
         repository.readingsCreate(readings);
+        return repository.findReadingsbyVin(readings.getVin());
     }
 }

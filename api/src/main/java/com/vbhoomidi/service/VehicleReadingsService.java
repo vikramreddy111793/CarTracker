@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface VehicleReadingsService {
     List<VehicleReadings> findReadingsofVehicle(String vin);
-    void create(VehicleReadings readings);
+    List<VehicleReadings> create(VehicleReadings readings);
 }
