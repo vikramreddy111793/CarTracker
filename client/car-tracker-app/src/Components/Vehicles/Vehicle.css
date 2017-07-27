@@ -1,0 +1,31 @@
+.custom-card {
+  padding: 10px 16px;
+  text-align: left;
+}
+.custom-card h3 {
+  display: flex;
+}
+.custom-card p {
+  padding-left: 10px;
+  color: #999;
+}
+
+.ant-card {
+  width: 100%;
+}
+
+.ant-card-head h3{
+
+  font-weight: bold;
+}
+
+.ant-card-head {
+  text-align: left;
+  background-color: #40C4FF;
+}
+.card-group {
+  padding-top: 20px;
+}
+.container {
+  display: inline-grid;
+}

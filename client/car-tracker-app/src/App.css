@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
 .App-logo {
@@ -7,10 +8,24 @@
   height: 80px;
 }
 
+.AppMenu {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 30%;
+}
+
+.AppBody {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 30px;
+  width: 70%;
+}
+
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  height: 60px;
+  padding: 10px;
   color: white;
 }
 
