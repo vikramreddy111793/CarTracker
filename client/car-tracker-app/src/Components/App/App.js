@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import VehicleList from './Components/Vehicles/VehicleList';
 import axios from 'axios';
+import VehicleList from '../Vehicles/VehicleList';
 import './App.css';
 
 class App extends Component {

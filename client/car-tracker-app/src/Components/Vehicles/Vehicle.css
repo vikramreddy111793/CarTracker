@@ -15,17 +15,17 @@
 }
 
 .ant-card-head h3{
-
   font-weight: bold;
 }
 
 .ant-card-head {
   text-align: left;
-  background-color: #40C4FF;
+  background-color: #fff9c4;
 }
 .card-group {
   padding-top: 20px;
   padding-bottom: 10px;
+
 }
 .container {
   display: inline-grid;

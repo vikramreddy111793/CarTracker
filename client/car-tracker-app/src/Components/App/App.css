@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  display: flex;
+}
+
+.AppMenu {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 30%;
+}
+
+.AppBody {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 30px;
+  width: 70%;
+}
