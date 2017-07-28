@@ -1,0 +1,21 @@
+.Alerts {
+  padding-left: 25%;
+  padding-right: 25%;
+}
+.ant-alert-with-description {
+  border-radius: 6px;
+  line-height: 0.8;
+  margin-bottom: 10px;
+}
+
+.ant-alert-with-description .ant-alert-icon {
+  top: 20px;
+}
+
+.ant-alert-with-description .ant-alert-message {
+  font-size: 20px;
+}
+
+.ant-alert-description {
+  font-size: 15px;
+}
