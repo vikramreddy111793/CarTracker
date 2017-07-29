@@ -1,5 +1,7 @@
 package com.vbhoomidi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -23,7 +25,10 @@ public class Alert {
 
     private String vin;
     private String priority;
-    private Date timeStamp;
+    private String description;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    private String timeStamp;
 
     public Alert(){
         this.id = UUID.randomUUID().toString();
@@ -53,12 +58,20 @@ public class Alert {
         this.priority = priority;
     }
 
-    public Date getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -67,6 +80,7 @@ public class Alert {
                 "id='" + id + '\'' +
                 ", vin='" + vin + '\'' +
                 ", priority='" + priority + '\'' +
+                ", description='" + description + '\'' +
                 ", timeStamp=" + timeStamp +
                 '}';
     }

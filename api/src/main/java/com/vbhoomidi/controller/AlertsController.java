@@ -32,7 +32,7 @@ public class AlertsController {
         return facadeService.findAlertsofVehicle(id);
     }
     @RequestMapping(method = RequestMethod.GET, value = "/high")
-    public Map<VehicleInfo, Integer> countHighAlerts(){
+    public Map<String, Integer> countHighAlerts(){
         return facadeService.countHighAlerts();
     }
 }

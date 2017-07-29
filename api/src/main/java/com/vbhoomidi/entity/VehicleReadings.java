@@ -1,5 +1,7 @@
 package com.vbhoomidi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -18,7 +20,10 @@ public class VehicleReadings {
     private String vin;
     private double latitude;
     private double longitude;
-    private Date timestamp;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    private String timestamp;
+
     private float fuelVolume;
     private float speed;
     private int engineHp;
@@ -74,11 +79,11 @@ public class VehicleReadings {
         this.longitude = longitude;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

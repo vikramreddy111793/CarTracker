@@ -1,5 +1,8 @@
 package com.vbhoomidi.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,7 +27,9 @@ public class VehicleInfo {
     private int year;
     private int redlineRpm;
     private float maxFuelVolume;
-    private Date lastServiceDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    private String lastServiceDate;
 
     public  VehicleInfo(){
         this.id = UUID.randomUUID().toString();
@@ -85,11 +90,11 @@ public class VehicleInfo {
         return maxFuelVolume;
     }
 
-    public Date getLastServiceDate() {
+    public String getLastServiceDate() {
         return lastServiceDate;
     }
 
-    public void setLastServiceDate(Date lastServiceDate) {
+    public void setLastServiceDate(String lastServiceDate) {
         this.lastServiceDate = lastServiceDate;
     }
 

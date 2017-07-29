@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/readings")
-@CrossOrigin(origins = "http://mocker.egen.io", maxAge = 3600)
+//@CrossOrigin(origins = "http://mocker.egen.io", maxAge = 3600)
 public class VehicleReadingsController {
 
     @Autowired
@@ -34,6 +34,7 @@ public class VehicleReadingsController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody VehicleReadings readings){
+        //System.out.println("readings invoked");
         facadeService.createReadings(readings);
     }
 }

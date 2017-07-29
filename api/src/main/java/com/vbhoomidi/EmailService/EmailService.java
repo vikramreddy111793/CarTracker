@@ -41,7 +41,7 @@ public class EmailService {
 
     ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    @JmsListener(destination = "highalertemailqueue")
+    //@JmsListener(destination = "highalertemailqueue")
     public void receiveMessage(Email email) {
         emailTask(email);
     }

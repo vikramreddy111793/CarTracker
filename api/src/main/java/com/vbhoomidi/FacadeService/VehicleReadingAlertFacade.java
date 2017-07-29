@@ -15,5 +15,5 @@ public interface VehicleReadingAlertFacade {
     void createAlerts(VehicleReadings readings, VehicleInfo vehicle);
     List<VehicleReadings> findReadingsofVehicle(String id);
     List<Alert> findAlertsofVehicle(String id);
-    Map<VehicleInfo, Integer> countHighAlerts();
+    Map<String, Integer> countHighAlerts();
 }

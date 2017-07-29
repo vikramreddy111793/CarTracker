@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,9 +25,10 @@ public class AlertServiceImpl implements AlertService {
     private AlertRepository repository;
 
     @CachePut(value = "alertsbyVIN", key = "#vin")
-    public List<Alert> create(String vin, String priority, Date timeStamp) {
+    public List<Alert> create(String vin, String priority, String description, String timeStamp) {
         Alert alert = new Alert();
         alert.setPriority(priority);
+        alert.setDescription(description);
         alert.setTimeStamp(timeStamp);
         alert.setVin(vin);
         repository.create(alert);
@@ -40,7 +43,14 @@ public class AlertServiceImpl implements AlertService {
 
                     Calendar previous = Calendar.getInstance();
                     Calendar current = Calendar.getInstance();
-                    previous.setTime(a.getTimeStamp());
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sssXXX");
+                    Date date = null;
+                    try{
+                        date = format.parse(a.getTimeStamp());
+                    }catch (Exception e){
+
+                    }
+                    previous.setTime(date);
                     long difference = current.getTimeInMillis()-previous.getTimeInMillis();
                     if(difference<=2*60*60*1000){
                         count++;

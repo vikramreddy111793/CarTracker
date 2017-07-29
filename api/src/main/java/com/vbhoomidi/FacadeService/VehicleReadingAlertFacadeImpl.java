@@ -51,24 +51,27 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
     @Transactional
     public void createAlerts(VehicleReadings readings, VehicleInfo vehicle) {
         if(readings.getEngineRpm()>vehicle.getRedlineRpm()){
-            alertService.create(readings.getVin(), "HIGH", readings.getTimestamp());
-            Email email = new Email();
-            email.setEmailMessage("High Alert for Car with Vin - "+vehicle.getVin()+"\n Make: "+vehicle.getMake()+"\n Model: "+vehicle.getModel());
-            email.setReceiverEmail(env.getProperty("receiver.useremail"));
-            email.setSenderEmail(env.getProperty("javamail.username"));
-            jmsTemplate.convertAndSend("highalertemailqueue",email);
+            alertService.create(readings.getVin(), "HIGH", "High Engine RPM", readings.getTimestamp());
+//            Email email = new Email();
+//            email.setEmailMessage("High Alert for Car with Vin - "+vehicle.getVin()+"\n Make: "+vehicle.getMake()+"\n Model: "+vehicle.getModel());
+//            email.setReceiverEmail(env.getProperty("receiver.useremail"));
+//            email.setSenderEmail(env.getProperty("javamail.username"));
+//            jmsTemplate.convertAndSend("highalertemailqueue",email);
         }
         if(readings.getFuelVolume()<((vehicle.getMaxFuelVolume())*0.1)){
-            alertService.create(readings.getVin(), "MEDIUM", readings.getTimestamp());
+            alertService.create(readings.getVin(), "MEDIUM", "Low Fuel", readings.getTimestamp());
         }
         if(readings.getTires().getRearLeft()<32 || readings.getTires().getRearLeft()>36 ||
                 readings.getTires().getRearRight()<32 || readings.getTires().getRearRight()>36 ||
                 readings.getTires().getFrontLeft()<32 || readings.getTires().getFrontLeft()>36 ||
                 readings.getTires().getFrontRight()<32 || readings.getTires().getFrontRight()>36){
-            alertService.create(readings.getVin(), "LOW", readings.getTimestamp());
+            alertService.create(readings.getVin(), "LOW", "Check Tire Pressure", readings.getTimestamp());
         }
-        if(readings.isEngineCoolantLow() || readings.isCheckEngineLightOn()){
-            alertService.create(readings.getVin(), "LOW", readings.getTimestamp());
+        if(readings.isEngineCoolantLow()){
+            alertService.create(readings.getVin(), "LOW", "Low Engine Coolant", readings.getTimestamp());
+        }
+        if(readings.isCheckEngineLightOn()){
+            alertService.create(readings.getVin(), "LOW", "Please Check Engine", readings.getTimestamp());
         }
     }
 
@@ -82,17 +85,17 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
         return alertService.findAlertsbyVin(vehicle.getVin());
     }
 
-    public Map<VehicleInfo, Integer> countHighAlerts() {
-        Map<VehicleInfo, Integer> highalertscount = new HashMap<VehicleInfo, Integer>();
+    public Map<String, Integer> countHighAlerts() {
+        Map<String, Integer> highalertscount = new HashMap<String, Integer>();
         List<VehicleInfo> vehicleslist = vehicleListService.findAll().orElseThrow(()->new ResourceNotFoundException("No List of Vehicles exist"));
         vehicleslist.forEach(vehicle -> {
             int count = alertService.countHighAlertsbyVin(vehicle.getVin());
-            highalertscount.put(vehicle,count);
+            highalertscount.put(vehicle.getVin(),count);
         });
-        LinkedHashMap<VehicleInfo, Integer> sortedAlertsCount = highalertscount.entrySet().stream()
+        LinkedHashMap<String, Integer> sortedAlertsCount = highalertscount.entrySet().stream()
                 .sorted((a1, a2) -> a2.getValue()-a1.getValue())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (e1, e2) -> e1, LinkedHashMap<VehicleInfo,Integer>::new));
+                        (e1, e2) -> e1, LinkedHashMap<String,Integer>::new));
         return sortedAlertsCount;
     }
 }
