@@ -4,8 +4,8 @@ import axios from 'axios';
 import Readings from '../VehicleReadings/Readings';
 import Alerts from '../VehicleAlerts/Alerts';
 import Location from '../VehicleLocation/Location';
-
 import './SpecificVehicle.css';
+
 
 class SpecificVehicle extends Component {
   constructor(props) {
@@ -33,21 +33,10 @@ class SpecificVehicle extends Component {
       .catch(function(error) {
         console.log(error);
       });
-    // this.setState({
-    //   vehicle : {
-    //     vin: "1HGCR2F3XFA027534",
-    //     make: "HONDA",
-    //     model: "ACCORD",
-    //     year: 2015,
-    //     redlineRpm: 5500,
-    //     maxFuelVolume: 15,
-    //     lastServiceDate: "2017-05-25T17:31:25.268Z"
-    //   }
-    // });
+
   }
 
   render() {
-  //  var vehicle = this.state.vehicle;
     const TabPane = Tabs.TabPane;
     return (
       <div className="SpecificVehicle">
@@ -59,10 +48,10 @@ class SpecificVehicle extends Component {
               <Readings />
             </TabPane>
             <TabPane tab="Location" key="2">
-              <Location />
+              <Location vehicleID={this.state.vehicle.id} />
             </TabPane>
             <TabPane tab="Alerts" key="3">
-              <Alerts  vehicleID={this.state.vehicle.id} />
+              <Alerts vehicleID={this.state.vehicle.id} />
             </TabPane>
           </Tabs>
       </div>
