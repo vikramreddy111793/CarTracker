@@ -16,4 +16,5 @@ public interface VehicleReadingAlertFacade {
     List<VehicleReadings> findReadingsofVehicle(String id);
     List<Alert> findAlertsofVehicle(String id);
     Map<String, Integer> countHighAlerts();
+    List<Map<String,Double>> findVehicleGeoLocation(String id);
 }

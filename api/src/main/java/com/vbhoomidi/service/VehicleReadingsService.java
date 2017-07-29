@@ -4,6 +4,7 @@ import com.vbhoomidi.entity.VehicleReadings;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vikramreddy on 7/9/2017.
@@ -11,4 +12,5 @@ import java.util.List;
 public interface VehicleReadingsService {
     List<VehicleReadings> findReadingsofVehicle(String vin);
     List<VehicleReadings> create(VehicleReadings readings);
+    List<Map<String,Double>> findVehicleGeoLocation(String vin);
 }

@@ -27,9 +27,7 @@ public class VehicleInfo {
     private int year;
     private int redlineRpm;
     private float maxFuelVolume;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private String lastServiceDate;
+    private Date lastServiceDate;
 
     public  VehicleInfo(){
         this.id = UUID.randomUUID().toString();
@@ -90,11 +88,11 @@ public class VehicleInfo {
         return maxFuelVolume;
     }
 
-    public String getLastServiceDate() {
+    public Date getLastServiceDate() {
         return lastServiceDate;
     }
 
-    public void setLastServiceDate(String lastServiceDate) {
+    public void setLastServiceDate(Date lastServiceDate) {
         this.lastServiceDate = lastServiceDate;
     }
 

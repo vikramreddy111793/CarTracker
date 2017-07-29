@@ -25,7 +25,7 @@ public class AlertServiceImpl implements AlertService {
     private AlertRepository repository;
 
     @CachePut(value = "alertsbyVIN", key = "#vin")
-    public List<Alert> create(String vin, String priority, String description, String timeStamp) {
+    public List<Alert> create(String vin, String priority, String description, Date timeStamp) {
         Alert alert = new Alert();
         alert.setPriority(priority);
         alert.setDescription(description);
@@ -43,14 +43,7 @@ public class AlertServiceImpl implements AlertService {
 
                     Calendar previous = Calendar.getInstance();
                     Calendar current = Calendar.getInstance();
-                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sssXXX");
-                    Date date = null;
-                    try{
-                        date = format.parse(a.getTimeStamp());
-                    }catch (Exception e){
-
-                    }
-                    previous.setTime(date);
+                    previous.setTime(a.getTimeStamp());
                     long difference = current.getTimeInMillis()-previous.getTimeInMillis();
                     if(difference<=2*60*60*1000){
                         count++;

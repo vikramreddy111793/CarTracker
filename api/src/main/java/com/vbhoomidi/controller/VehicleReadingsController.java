@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vikramreddy on 7/9/2017.
@@ -30,6 +31,11 @@ public class VehicleReadingsController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public List<VehicleReadings> findReadingsofVehicle(@PathVariable("id") String id){
         return facadeService.findReadingsofVehicle(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/location/{id}")
+    public List<Map<String,Double>> findVehicleGeoLocation(@PathVariable("id") String id){
+        return facadeService.findVehicleGeoLocation(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)

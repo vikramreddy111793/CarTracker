@@ -26,9 +26,7 @@ public class Alert {
     private String vin;
     private String priority;
     private String description;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private String timeStamp;
+    private Date timeStamp;
 
     public Alert(){
         this.id = UUID.randomUUID().toString();
@@ -58,11 +56,11 @@ public class Alert {
         this.priority = priority;
     }
 
-    public String getTimeStamp() {
+    public Date getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
 

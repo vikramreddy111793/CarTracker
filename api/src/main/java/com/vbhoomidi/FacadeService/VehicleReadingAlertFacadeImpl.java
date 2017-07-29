@@ -98,4 +98,9 @@ public class VehicleReadingAlertFacadeImpl implements VehicleReadingAlertFacade{
                         (e1, e2) -> e1, LinkedHashMap<String,Integer>::new));
         return sortedAlertsCount;
     }
+
+    public List<Map<String,Double>> findVehicleGeoLocation(String id) {
+        VehicleInfo vehicle = vehicleListService.findOne(id);
+        return vehicleReadingsService.findVehicleGeoLocation(vehicle.getVin());
+    }
 }
